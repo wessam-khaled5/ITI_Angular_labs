@@ -1,0 +1,63 @@
+<div class="container mt-5">
+
+  <h2 class="text-center mb-4">Courses</h2>
+
+  <!-- Dropdown -->
+  <div class="row mb-4">
+    <div class="col-md-4 mx-auto">
+      <select [(ngModel)]="selectedCategory" class="form-select">
+        <option value="All">All</option>
+        <option value="Programming">Programming</option>
+        <option value="Design">Design</option>
+        <option value="Marketing">Marketing</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+
+    @for (c of courses; track c.id) {
+
+      @if (selectedCategory === 'All' || c.category === selectedCategory) {
+
+        <div class="col-md-4 mb-4">
+          <div class="card h-100 shadow"
+               [ngStyle]="{ 'background-color': c.seats <= 2 ? '#fff3cd' : 'white' }">
+
+            <img [src]="c.image" class="card-img-top" height="200">
+
+            <div class="card-body text-center"
+                 [ngClass]="{ 'text-danger': c.seats === 0 }">
+
+              <h5 class="card-title">{{ c.title }}</h5>
+              <p>{{ c.instructor }}</p>
+              <p class="fw-bold">{{ c.price }} $</p>
+              <p>Seats: {{ c.seats }}</p>
+
+              @if (c.seats === 0) {
+                <p class="fw-bold text-danger">Course Full</p>
+              }
+
+              @if (c.seats <= 2 && c.seats > 0) {
+                <p class="fw-bold text-warning">Almost Full</p>
+              }
+
+              <button 
+                (click)="register(c)"
+                class="btn btn-primary w-100"
+                [disabled]="c.seats === 0">
+                Register
+              </button>
+
+            </div>
+
+          </div>
+        </div>
+
+      }
+
+    }
+
+  </div>
+
+</div>
