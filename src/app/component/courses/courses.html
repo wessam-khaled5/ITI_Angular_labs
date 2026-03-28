@@ -2,7 +2,7 @@
 
   <h2 class="text-center mb-4">Courses</h2>
 
-  <!-- Dropdown -->
+  
   <div class="row mb-4">
     <div class="col-md-4 mx-auto">
       <select [(ngModel)]="selectedCategory" class="form-select">
@@ -31,7 +31,12 @@
 
               <h5 class="card-title">{{ c.title }}</h5>
               <p>{{ c.instructor }}</p>
-              <p class="fw-bold">{{ c.price }} $</p>
+
+                    <p class="fw-bold">
+                {{ c.price | discount }} $
+              </p>
+
+              
               <p>Seats: {{ c.seats }}</p>
 
               @if (c.seats === 0) {
@@ -42,12 +47,13 @@
                 <p class="fw-bold text-warning">Almost Full</p>
               }
               
-              <button 
-                (click)="register(c)"
-                class="btn btn-primary w-100"
-                [disabled]="c.seats === 0">
-                Register
-              </button>
+                    <button 
+            (click)="register(c)"
+            appDisableAfterClick
+            class="btn btn-primary w-100"
+            [disabled]="c.seats === 0">
+            Register
+          </button>
 
             </div>
 
