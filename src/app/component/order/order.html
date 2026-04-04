@@ -1,0 +1,21 @@
+<div class="container mt-4">
+
+  <h2>Order Page</h2>
+
+  
+  <select [(ngModel)]="selectedCategoryId" class="form-select mb-3">
+
+    <option value="0">All</option>
+
+    @for (cat of categories; track cat.id) {
+      <option [value]="cat.id">
+        {{ cat.name }}
+      </option>
+    }
+
+  </select>
+
+  <!-- Child Component -->
+  <app-courses [selectedCategory]="selectedCategoryId"></app-courses>
+
+</div>
