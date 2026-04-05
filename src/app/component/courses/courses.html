@@ -1,56 +1,54 @@
 <div class="container mt-4">
 
-  <h2>Courses</h2>
-
-  
- 
+  <h2 class="text-center mb-4">Courses</h2>
 
   <div class="row">
 
     @for (c of courses; track c.id) {
 
-      @if (selectedCategory == 0 || c.catId == selectedCategory) {
+      <div class="col-md-4 mb-4">
 
-        <div class="col-md-4 mb-3">
-          <div class="card"
-               [ngStyle]="{ 'background-color': c.seats <= 2 ? '#fff3cd' : 'white' }">
+        <div class="card h-100 shadow"
+             [ngStyle]="{ 'background-color': c.seats <= 2 ? '#fff3cd' : 'white' }">
 
-            <img [src]="c.image" class="card-img-top" height="200">
+          <img [src]="c.image" class="card-img-top" height="200">
 
-            <div class="card-body text-center"
-                 [ngClass]="{ 'text-danger': c.seats === 0 }">
+          <div class="card-body text-center"
+               [ngClass]="{ 'text-danger': c.seats === 0 }">
 
-              <h5>{{ c.title }}</h5>
-              <p>{{ c.instructor }}</p>
+            <h5 class="card-title">{{ c.title }}</h5>
 
-              <p class="fw-bold">
-                {{ c.price | discount }}
-              </p>
+            <p class="text-muted">{{ c.category }}</p>
 
-              <p>Seats: {{ c.seats }}</p>
+            <p>{{ c.instructor }}</p>
 
-              @if (c.seats === 0) {
-                <p class="text-danger">Course Full</p>
-              }
+            <p class="fw-bold">
+              {{ c.price | discount }} $
+            </p>
 
-              @if (c.seats <= 2 && c.seats > 0) {
-                <p class="text-warning">Almost Full</p>
-              }
+            <p>Seats: {{ c.seats }}</p>
 
-              <button 
-                (click)="register(c)"
-                appDisableAfterClick
-                class="btn btn-primary w-100"
-                [disabled]="c.seats === 0">
-                Register
-              </button>
+            @if (c.seats === 0) {
+              <p class="fw-bold text-danger">Course Full</p>
+            }
 
-            </div>
+            @if (c.seats <= 2 && c.seats > 0) {
+              <p class="fw-bold text-warning">Almost Full</p>
+            }
+
+            <button 
+              (click)="register(c)"
+              appDisableAfterClick
+              class="btn btn-primary w-100"
+              [disabled]="c.seats === 0">
+              Register
+            </button>
 
           </div>
+
         </div>
 
-      }
+      </div>
 
     }
 

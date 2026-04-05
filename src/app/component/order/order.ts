@@ -14,6 +14,9 @@ export class OrderComponent {
 
   categories: any[] = [];
   selectedCategoryId: number = 0;
+  onCourseRegistered(course: any) {
+  console.log('Course Registered:', course);
+}
 
   constructor(private categoryService: CategoriesService) {
     this.categories = this.categoryService.getAllCategories();

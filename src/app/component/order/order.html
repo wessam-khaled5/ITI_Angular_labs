@@ -1,21 +1,28 @@
 <div class="container mt-4">
 
-  <h2>Order Page</h2>
+  <h2 class="text-center mb-4">Order Page</h2>
 
-  
-  <select [(ngModel)]="selectedCategoryId" class="form-select mb-3">
+  <div class="col-md-4 mx-auto mb-4">
 
-    <option value="0">All</option>
+    <select 
+      [(ngModel)]="selectedCategoryId" 
+      class="form-select">
 
-    @for (cat of categories; track cat.id) {
-      <option [value]="cat.id">
-        {{ cat.name }}
-      </option>
-    }
+      <option [value]="0">All</option>
 
-  </select>
+      @for (cat of categories; track cat.id) {
+        <option [value]="cat.id">
+          {{ cat.name }}
+        </option>
+      }
 
-  <!-- Child Component -->
-  <app-courses [selectedCategory]="selectedCategoryId"></app-courses>
+    </select>
+
+  </div>
+
+  <app-courses 
+    [selectedCategory]="selectedCategoryId"
+    (courseRegistered)="onCourseRegistered($event)">
+  </app-courses>
 
 </div>

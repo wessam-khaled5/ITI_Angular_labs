@@ -59,12 +59,16 @@ export class CoursesService {
     }
   ];
 
-  getCoursesByCatID(catID: number): Course[] {
-    return this.courses.filter(c => c.catId === catID);
-  }
-
+ 
   getCourseByID(courseID: number): Course | undefined {
     return this.courses.find(c => c.id === courseID);
   }
+  getCoursesByCatID(catID: number) {
+  if (catID == 0) {
+    return this.courses;
+  }
+
+  return this.courses.filter(c => c.catId == catID);
+}
 
 }

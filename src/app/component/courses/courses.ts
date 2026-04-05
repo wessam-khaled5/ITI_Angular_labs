@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DiscountPipe } from '../../pipes/discount-pipe';
@@ -8,6 +8,7 @@ import { Course } from '../../models/course';
 import { RouterModule } from '@angular/router';
 import { DisableAfterClickDirective } from '../../directives/disable-after-click';
 import { Input } from '@angular/core';
+import { Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-courses',
@@ -17,12 +18,14 @@ import { Input } from '@angular/core';
   templateUrl: './courses.html',
   styleUrls: ['./courses.css']
 })
-export class CoursesComponent implements OnInit {
+
+export class CoursesComponent implements OnInit, OnChanges {
 
   courses: Course[] = [];
   categories: any[] = [];
-  @Input() selectedCategory: number = 0;
 
+  @Input() selectedCategory: number = 0;
+  @Output() courseRegistered = new EventEmitter<any>();
 
   constructor(
     private courseService: CoursesService,
@@ -30,12 +33,18 @@ export class CoursesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.courses = this.courseService.courses;
+    this.courses = this.courseService.getCoursesByCatID(0);
     this.categories = this.categoryService.getAllCategories();
   }
-register(course: any) {
-  if (course.seats > 0) {
-    course.seats--;
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.courses = this.courseService.getCoursesByCatID(this.selectedCategory);
   }
-}
+
+  register(course: any) {
+    if (course.seats > 0) {
+      course.seats--;
+      this.courseRegistered.emit(course);
+    }
+  }
 }
