@@ -1,0 +1,17 @@
+<form (ngSubmit)="addCourse()" class="container mt-4">
+
+  <input [(ngModel)]="course.title" name="title" class="form-control mb-2" placeholder="Title">
+
+  <input [(ngModel)]="course.price" name="price" type="number" class="form-control mb-2">
+
+  <select [(ngModel)]="course.catId" name="catId" class="form-select mb-2">
+
+    @for (cat of categories; track cat.id) {
+      <option [value]="cat.id">{{ cat.name }}</option>
+    }
+
+  </select>
+
+  <button class="btn btn-success">Add Course</button>
+
+</form>

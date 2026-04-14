@@ -1,18 +1,15 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriesService {
 
-  categories = [
-    { id: 1, name: "Programming" },
-    { id: 2, name: "Design" },
-    { id: 3, name: "Marketing" }
-  ];
+  constructor(private http: HttpClient) {}
 
   getAllCategories() {
-    return this.categories;
+    return this.http.get(`${environment.apiURL}/categories`);
   }
-
 }

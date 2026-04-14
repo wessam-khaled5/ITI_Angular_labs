@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CategoriesService } from '../../services/categories';
@@ -7,19 +7,23 @@ import { CoursesComponent } from '../courses/courses';
 @Component({
   selector: 'app-order',
   standalone: true,
- imports: [CommonModule, FormsModule, CoursesComponent],
+  imports: [CommonModule, FormsModule, CoursesComponent],
   templateUrl: './order.html'
 })
-export class OrderComponent {
+export class OrderComponent implements OnInit {
 
   categories: any[] = [];
   selectedCategoryId: number = 0;
-  onCourseRegistered(course: any) {
-  console.log('Course Registered:', course);
-}
 
-  constructor(private categoryService: CategoriesService) {
-    this.categories = this.categoryService.getAllCategories();
+  constructor(private categoryService: CategoriesService) {}
+
+  ngOnInit() {
+    this.categoryService.getAllCategories().subscribe(data => {
+      this.categories = data as any[];
+    });
   }
 
+  onCourseRegistered(course: any) {
+    console.log('Registered:', course);
+  }
 }
